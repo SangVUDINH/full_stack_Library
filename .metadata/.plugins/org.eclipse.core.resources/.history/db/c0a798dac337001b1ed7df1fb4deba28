@@ -1,0 +1,11 @@
+package com.store.library.book;
+
+@Entity
+public class Book {
+    
+    private Integer id;
+    private String title;
+    private String isbn;
+    private String author;
+    
+}

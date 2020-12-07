@@ -1,0 +1,21 @@
+package com.store.library.category;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "category")
+public class Category {
+    
+    private String code;
+    private String label;
+    
+    public Category( String code, String label ) {
+        super();
+        this.code = code;
+        this.label = label;
+    }
+    
+    
+
+}

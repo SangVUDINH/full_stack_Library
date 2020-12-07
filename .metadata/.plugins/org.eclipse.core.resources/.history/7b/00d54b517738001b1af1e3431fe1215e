@@ -1,0 +1,5 @@
+package com.store.library.category;
+
+public class CategoryDTO {
+
+}
