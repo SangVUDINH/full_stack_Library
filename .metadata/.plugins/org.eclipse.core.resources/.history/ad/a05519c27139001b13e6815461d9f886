@@ -1,0 +1,5 @@
+package com.store.library.customer;
+
+public class Customer {
+
+}

@@ -1,0 +1,23 @@
+package com.store.library.customer;
+
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="customers")
+public class Customer {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    
+    private String firstname;
+    private String lastname;
+    private String job;
+    private String address;
+    private String email;
+    private LocalDate creationdate;
+
+}

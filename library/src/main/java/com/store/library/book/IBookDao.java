@@ -17,6 +17,6 @@ public interface IBookDao extends JpaRepository<Book, Integer> {
             + "INNER JOIN b.category cat "
             + "WHERE cat.code = :code"
           )
-    public List<Book> findByCategory(@Param("code") String codeCategory);
+    public List<Book> findByCategory(@Param("code") Integer codeCategory);
 
 }

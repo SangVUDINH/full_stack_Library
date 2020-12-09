@@ -1,0 +1,15 @@
+package com.store.library.loan;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="loans")
+public class Loan {
+    private LoanId pk = new LoanId();
+    
+    private LocalDate begindate;
+    private LocalDate enddate;
+    
+    
+}

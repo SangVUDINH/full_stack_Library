@@ -15,5 +15,5 @@ public interface IBookService {
     
     public boolean checkIfIdexists(Integer id);
     
-    public List<Book> getBooksByCategory(String codeCategory);
+    public List<Book> getBooksByCategory(Integer codeCategory);
 }

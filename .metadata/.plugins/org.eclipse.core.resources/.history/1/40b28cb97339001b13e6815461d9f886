@@ -1,0 +1,59 @@
+package com.store.library.customer;
+
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+
+@Service("customerService")
+@Transactional
+public class CustomerServiceImpl implements ICustomerService {
+
+    @Override
+    public Customer saveCustomer( Customer customer ) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Customer updateCustomer( Customer customer ) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void deleteCustomer( Integer customerId ) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public boolean checkIfIdexists( Integer id ) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public Customer findCustomerByEmail( String email ) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<Customer> findCustomerByLastName( String lastName ) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Customer findCustomerById( Integer customerId ) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Page<Customer> getPaginatedCustomersList( int begin, int end ) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+}

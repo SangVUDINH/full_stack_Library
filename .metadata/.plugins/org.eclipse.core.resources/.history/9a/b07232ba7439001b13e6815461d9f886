@@ -1,0 +1,11 @@
+package com.store.library.customer;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ICustomerDao extends JpaRepository<Customer,Integer> {
+
+    List<Customer> findCustomerByLastNameIgnoreCase( String lastName );
+
+}

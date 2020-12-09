@@ -1,0 +1,5 @@
+package com.store.library.loan;
+
+public class LoanId {
+
+}

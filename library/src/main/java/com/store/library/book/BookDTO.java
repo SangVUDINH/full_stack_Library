@@ -17,8 +17,7 @@ public class BookDTO implements Comparable<BookDTO>{
     private String title;
     
 
-    private String isbn;
-    
+    private String isbn;    
 
     private LocalDate releaseDate;
 

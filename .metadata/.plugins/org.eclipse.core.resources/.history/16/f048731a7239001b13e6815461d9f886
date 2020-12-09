@@ -1,0 +1,16 @@
+package com.store.library.customer;
+
+@Entity
+@Table(name="customers")
+public class Customer {
+    
+    private Integer id;
+    
+    private String firstname;
+    private String lastname;
+    private String job;
+    private String address;
+    private String email;
+    private LocalDate creationdate;
+
+}

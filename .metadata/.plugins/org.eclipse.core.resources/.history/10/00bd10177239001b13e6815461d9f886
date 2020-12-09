@@ -1,0 +1,7 @@
+package com.store.library.customer;
+
+@Entity
+@Table(name="customers")
+public class Customer {
+
+}

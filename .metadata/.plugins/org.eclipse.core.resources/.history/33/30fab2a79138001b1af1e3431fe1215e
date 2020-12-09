@@ -1,0 +1,13 @@
+package com.store.library.category;
+
+import java.util.List;
+
+public class CategoryServiceImpl implements ICategoryService {
+
+    @Override
+    public List<Category> getAllCategories() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+}

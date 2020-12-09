@@ -1,0 +1,5 @@
+package com.store.library.customer;
+
+public interface ICustomerDao extends Jparepository<Customer,Integer> {
+
+}

@@ -45,7 +45,7 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
-    public List<Book> getBooksByCategory(String codeCategory) {
+    public List<Book> getBooksByCategory(Integer codeCategory) {
         return bookDao.findByCategory(codeCategory);
     }
 

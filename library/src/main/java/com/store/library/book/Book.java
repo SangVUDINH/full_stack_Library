@@ -1,16 +1,23 @@
 package com.store.library.book;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.store.library.category.Category;
+import com.store.library.loan.Loan;
 
 @Entity
 @Table(name="books")
@@ -29,11 +36,24 @@ public class Book {
     
     private String author;
     
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "cat_code")
     private Category category;
 
+    @JsonIgnore
+    @OneToMany(targetEntity=Loan.class,fetch = FetchType.LAZY, mappedBy = "pk.book", cascade = CascadeType.ALL)
+    List<Loan> loans = new ArrayList<>();
     
+    
+    
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans( List<Loan> loans ) {
+        this.loans = loans;
+    }
+
     public Integer getIdbook() {
         return idbook;
     }

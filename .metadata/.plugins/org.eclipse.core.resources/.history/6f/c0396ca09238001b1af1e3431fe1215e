@@ -1,0 +1,7 @@
+package com.store.library.category;
+
+@RestController
+@RequestMapping("rest/category/api")
+public class CategoryRestController {
+
+}

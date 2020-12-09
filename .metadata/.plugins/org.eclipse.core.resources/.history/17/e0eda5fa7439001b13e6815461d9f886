@@ -1,0 +1,25 @@
+package com.store.library.customer;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("rest/customer/api")
+public class CustomerRestController {
+
+    @Autowired
+    private CustomerServiceImpl customerService;
+    
+    @GetMapping("/searchByLastName")
+    public ResponseEntity<List<Customer>> searchCustomerByLastName(@RequestParam("lastname") String lastname){
+        
+    }
+    
+    
+}

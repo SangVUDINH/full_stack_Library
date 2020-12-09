@@ -1,5 +1,9 @@
 package com.store.library.category;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.store.library.book.Book;
 
 public class CategoryDTO implements Comparable<CategoryDTO> {
 
@@ -16,6 +20,18 @@ public class CategoryDTO implements Comparable<CategoryDTO> {
     private Integer code;
 
     private String label;
+    
+    private List<Book> books = new ArrayList<>();
+    
+    
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks( List<Book> books ) {
+        this.books = books;
+    }
 
     public Integer getCode() {
         return code;
