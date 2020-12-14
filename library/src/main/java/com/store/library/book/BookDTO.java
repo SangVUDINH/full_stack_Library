@@ -11,31 +11,22 @@ import com.store.library.category.CategoryDTO;
 public class BookDTO implements Comparable<BookDTO>{
     
 
-    private Integer id;
-
-
-    private String title;
-    
-
+    private Integer idbook;
+    private String title;   
     private String isbn;    
-
     private LocalDate releaseDate;
-
     private LocalDate registerDate;
-
-    private Integer totalExamplaries;
-    
-
+    private Integer totalExamplaries;  
     private String author;
-
     private CategoryDTO category;
 
-    public Integer getId() {
-        return id;
+
+    public Integer getIdbook() {
+        return idbook;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdbook( Integer idbook ) {
+        this.idbook = idbook;
     }
 
     public String getTitle() {

@@ -1,8 +1,0 @@
-package com.store.library.customer;
-
-
-@RestController
-@RequestMapping("rest/customer/api")
-public class CustomerRestController {
-
-}

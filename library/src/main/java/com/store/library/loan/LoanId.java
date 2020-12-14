@@ -21,11 +21,12 @@ public class LoanId implements Serializable{
     
     
            
-    public LoanId( Book book, Customer customer, LocalDateTime creationdatetime ) {
+    public LoanId( Book book, Customer customer) {
         super();
         this.book = book;
         this.customer = customer;
-        this.creationdatetime = creationdatetime;
+        this.creationdatetime = LocalDateTime.now();
+       
     }
     
     public LoanId() {

@@ -1,7 +1,0 @@
-package com.store.library.category;
-
-public interface ICategoryService {
-    
-    public List<Category> getAllCategories();
-
-}

@@ -1,0 +1,16 @@
+package com.store.library.loan;
+
+import java.time.LocalDate;
+
+import com.store.library.book.BookDTO;
+import com.store.library.customer.CustomerDTO;
+
+public class LoanDTO {
+    
+    private BookDTO bookDTO = new BookDTO();
+    private CustomerDTO customerDTO = new CustomerDTO();
+    
+    private LocalDate loanbegindate;
+    private LocalDate loanenddate;
+
+}

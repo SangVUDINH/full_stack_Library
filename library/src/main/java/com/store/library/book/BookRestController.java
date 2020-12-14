@@ -11,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -93,9 +96,7 @@ public class BookRestController {
             return new ResponseEntity<BookDTO>(HttpStatus.CONFLICT);
         }
         
-        //Category cat = categoryService.findById(bookDTORequest.getCategory().getCode());
-        Book bookrequest = mapBookDTOToBook(bookDTORequest);
-        
+        Book bookrequest = mapBookDTOToBook(bookDTORequest);        
         Book book = bookService.saveBook( bookrequest );
         
         if(book !=null && book.getIdbook() !=null) {
@@ -105,6 +106,30 @@ public class BookRestController {
         }
         
         return new ResponseEntity<BookDTO>(HttpStatus.NOT_MODIFIED);
+    }
+    
+    
+    @PutMapping("/updateBook")
+    public ResponseEntity<BookDTO> updateBook(@RequestBody BookDTO bookDTORequest) {
+        
+        if (!bookService.checkIfIdexists(bookDTORequest.getIdbook())) {
+            return new ResponseEntity<BookDTO>(HttpStatus.NOT_FOUND);
+        }
+        
+        Book bookRequest = mapBookDTOToBook(bookDTORequest);
+        Book book = bookService.updateBook(bookRequest);
+        
+        if (book != null) {
+            BookDTO bookDTO = mapBookToBookDTO(book);
+            return new ResponseEntity<BookDTO>(bookDTO, HttpStatus.OK);
+        }
+        return new ResponseEntity<BookDTO>(HttpStatus.NOT_MODIFIED);
+    }
+    
+    @DeleteMapping("/deleteBook/{bookid}")
+    public ResponseEntity<String> deleteCustomer(@PathVariable Integer bookid){
+        bookService.deleteBook( bookid );
+        return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
     }
     
 

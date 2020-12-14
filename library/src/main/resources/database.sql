@@ -40,12 +40,12 @@ CREATE TABLE customers (
     creationdate	datetime	DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO customers(firstname, lastname) VALUES ("prenom","nom"),("prenom2","nom2"),("prenom3","nom3");
+INSERT INTO customers(firstname, lastname,email) VALUES ("prenom","nom","cdsang@gmaol.fr"),("prenom2","nom2","cdsang@gmaol.fr2"),("prenom3","nom3","vd.sang13@gmail.com");
 
 CREATE TABLE loans (
 	bookid 				int NOT NULL REFERENCES books(idbook),
 	customerid 			int	NOT NULL REFERENCES customers(id),
-	creationdatetime 	datetime ,
+	creationdatetime 	datetime DEFAULT CURRENT_TIMESTAMP,
 	
 	begindate			datetime DEFAULT CURRENT_TIMESTAMP,
 	enddate				datetime ,

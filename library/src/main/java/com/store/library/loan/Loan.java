@@ -26,10 +26,7 @@ public class Loan {
     @Enumerated(EnumType.STRING)    
     private LoanStatus status;
 
-    private LocalDate enddate;
-
-    
-    
+    private LocalDate enddate;   
     
     public Loan() {
         super();

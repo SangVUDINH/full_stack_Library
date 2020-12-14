@@ -2,55 +2,44 @@ package com.store.library.loan;
 
 import java.time.LocalDate;
 
+import com.store.library.book.BookDTO;
+import com.store.library.customer.CustomerDTO;
 
-
-public class LoanDTO {
-   
-   private Integer bookid;
-   private Integer customerid;
-   private LocalDate begindate;
-   private LocalDate enddate;
-   
-   
-   
-   
-public LoanDTO() {
-    super();
-    // TODO Auto-generated constructor stub
-}
-public LoanDTO( Integer bookid, Integer customerid, LocalDate begindate, LocalDate enddate ) {
-    super();
-    this.bookid = bookid;
-    this.customerid = customerid;
-    this.begindate = begindate;
-    this.enddate = enddate;
-}
-public Integer getBookid() {
-    return bookid;
-}
-public void setBookid( Integer bookid ) {
-    this.bookid = bookid;
-}
-public Integer getCustomerid() {
-    return customerid;
-}
-public void setCustomerid( Integer customerid ) {
-    this.customerid = customerid;
-}
-public LocalDate getBegindate() {
-    return begindate;
-}
-public void setBegindate( LocalDate begindate ) {
-    this.begindate = begindate;
-}
-public LocalDate getEnddate() {
-    return enddate;
-}
-public void setEnddate( LocalDate enddate ) {
-    this.enddate = enddate;
-}
-   
-   
+public class LoanDTO implements Comparable<LoanDTO>  {
+    
+    private BookDTO bookDTO = new BookDTO();
+    private CustomerDTO customerDTO = new CustomerDTO();
+    
+    private LocalDate loanbegindate;
+    private LocalDate loanenddate;
+    public BookDTO getBookDTO() {
+        return bookDTO;
+    }
+    public void setBookDTO( BookDTO bookDTO ) {
+        this.bookDTO = bookDTO;
+    }
+    public CustomerDTO getCustomerDTO() {
+        return customerDTO;
+    }
+    public void setCustomerDTO( CustomerDTO customerDTO ) {
+        this.customerDTO = customerDTO;
+    }
+    public LocalDate getLoanbegindate() {
+        return loanbegindate;
+    }
+    public void setLoanbegindate( LocalDate loanbegindate ) {
+        this.loanbegindate = loanbegindate;
+    }
+    public LocalDate getLoanenddate() {
+        return loanenddate;
+    }
+    public void setLoanenddate( LocalDate loanenddate ) {
+        this.loanenddate = loanenddate;
+    }
+    @Override
+    public int compareTo( LoanDTO o ) {
+        return o.getLoanbegindate().compareTo(this.loanbegindate);
+    }
     
     
 

@@ -1,8 +1,0 @@
-package com.store.library.loan;
-
-
-@RestController
-@RequestMapping("rest/loan/api")
-public class LoanRestController {
-
-}
