@@ -1,5 +1,0 @@
-package com.store.library.customer;
-
-public interface ICustomerDao extends JpaRepository<Customer,Integer> {
-
-}

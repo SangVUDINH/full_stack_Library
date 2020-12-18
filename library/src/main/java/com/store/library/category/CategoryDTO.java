@@ -21,18 +21,6 @@ public class CategoryDTO implements Comparable<CategoryDTO> {
 
     private String label;
     
-    private List<Book> books = new ArrayList<>();
-    
-    
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks( List<Book> books ) {
-        this.books = books;
-    }
-
     public Integer getCode() {
         return code;
     }

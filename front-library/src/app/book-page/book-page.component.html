@@ -1,0 +1,54 @@
+<p>book-page works!</p>
+
+<ul>
+    <li *ngFor="let category of categories">{{ category.code}}  ||  {{category.label}}</li>
+</ul>
+
+
+
+<div  style="display: block; margin: auto; width: 60%;">
+
+    <form>
+        <fieldset>
+          <legend>Creation du livre</legend>
+
+          <div class="form-group">
+            <label for="titre">Titre</label>
+            <input  class="form-control" id="titre"  placeholder="Rentrez le titre du livre">
+          </div>
+
+          <div class="form-group">
+            <label for="isbn">Isbn</label>
+            <input  class="form-control" id="isbn"  placeholder="Rentrez l'isbn du livre">
+          </div>
+
+          <div class="form-group">
+            <label for="auteur">Auteur</label>
+            <input  class="form-control"  id="auteur">
+          </div>
+
+          <div class="form-group">
+            <label for="totalexemplaire">Le nombre d'examplaire</label>
+            <input  class="form-control" type="number" id="totalexemplaire">
+          </div>
+
+          <div class="form-group">
+            <label for="date_sortie">Date sortie</label>
+            <input  class="form-control" type="date" id="date_sortie" >
+          </div>
+
+
+
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category">
+              <option *ngFor="let category of categories">{{ category.label }}</option>
+   
+            </select>
+          </div>
+  
+
+          <button type="submit" class="btn btn-primary">Valider</button>
+        </fieldset>
+      </form>
+</div>

@@ -1,5 +1,0 @@
-package com.store.library.loan;
-
-public interface ILoanDao extends JpaRepository<Loan,Integer> {
-
-}

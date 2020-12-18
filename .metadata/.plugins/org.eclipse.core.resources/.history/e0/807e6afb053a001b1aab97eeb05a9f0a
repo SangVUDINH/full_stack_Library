@@ -1,7 +1,0 @@
-package com.store.library.loan;
-
-@Entity
-@Table(name="loans")
-public class Loan {
-
-}

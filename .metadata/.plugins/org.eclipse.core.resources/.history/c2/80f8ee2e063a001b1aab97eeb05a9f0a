@@ -1,6 +1,0 @@
-package com.store.library.loan;
-
-@Embeddable
-public class LoanId {
-
-}
