@@ -39,12 +39,12 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public Customer findCustomerByEmail( String email ) {
-        return customerDao.findCustomerByEmailIgnoreCase( email );
+        return customerDao.findCustomerByEmailIgnoreCase(email  );
     }
 
     @Override
     public List<Customer> findCustomerByLastName( String lastName ) {
-        return customerDao.findCustomerByLastnameIgnoreCase(lastName);
+        return customerDao.findCustomerByLastnameLikeIgnoreCase((new StringBuilder()).append("%").append(lastName).append("%").toString() );
     }
 
     @Override

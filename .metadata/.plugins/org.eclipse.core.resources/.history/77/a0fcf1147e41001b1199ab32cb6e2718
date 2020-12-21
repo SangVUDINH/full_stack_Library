@@ -1,0 +1,94 @@
+package com.store.library.book;
+
+
+import java.time.LocalDate;
+
+import com.store.library.category.CategoryDTO;
+
+
+
+
+public class BookDTO implements Comparable<BookDTO>{
+    
+
+    private Integer idbook;
+    private String title;   
+    private String isbn;    
+    private LocalDate releaseDate;
+    private LocalDate registerDate;
+    private Integer totalexamplaries;  
+    private String author;
+    private CategoryDTO category;
+
+
+    public Integer getIdbook() {
+        return idbook;
+    }
+
+    public void setIdbook( Integer idbook ) {
+        this.idbook = idbook;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public LocalDate getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(LocalDate registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public Integer getTotalExamplaries() {
+        return totalexamplaries;
+    }
+
+    public void setTotalExamplaries(Integer totalExamplaries) {
+        this.totalexamplaries = totalExamplaries;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public CategoryDTO getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryDTO category) {
+        this.category = category;
+    }
+
+    @Override
+    public int compareTo(BookDTO o) {
+        return title.compareToIgnoreCase(o.getTitle());
+    }
+}
+    
+    

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,9 +27,15 @@ import com.store.library.category.Category;
 import com.store.library.category.CategoryDTO;
 import com.store.library.category.CategoryServiceImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 
 @RestController
 @RequestMapping("rest/book/api")
+@Api(value = "Book Rest Controller: contains all operations for managing books")
 public class BookRestController {
     public static final Logger LOGGER = LoggerFactory.getLogger(BookRestController.class);
     
@@ -38,6 +45,7 @@ public class BookRestController {
     @Autowired
     private CategoryServiceImpl categoryService;
     
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/searchByTitle")
     public ResponseEntity<List<BookDTO>> searchBookByTitle(@RequestParam("title") String title,
                 UriComponentsBuilder uriComponentBuilder){
@@ -55,7 +63,7 @@ public class BookRestController {
         return new ResponseEntity<List<BookDTO>>(HttpStatus.NO_CONTENT);
     }
     
-    
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/booksByCategory")
     public ResponseEntity<List<BookDTO>> getBooksByCategory(@RequestParam("category_code") Integer cat_code){
         
@@ -73,7 +81,7 @@ public class BookRestController {
         return new ResponseEntity<List<BookDTO>>(HttpStatus.NO_CONTENT);
     }
         
-    
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("searchByIsbn")
     public ResponseEntity <BookDTO> searchBookByIsbn(@RequestParam("isbn") String isbn){
         
@@ -87,8 +95,12 @@ public class BookRestController {
         return new ResponseEntity<BookDTO>(HttpStatus.NO_CONTENT);
     }
     
-    
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/addBook")
+    @ApiOperation(value = "Add a new Book in the Library", response = BookDTO.class)
+    @ApiResponses(value = { @ApiResponse(code = 409, message = "Conflict: the book already exist"),
+            @ApiResponse(code = 201, message = "Created: the book is successfully inserted"),
+            @ApiResponse(code = 304, message = "Not Modified: the book is unsuccessfully inserted") })
     public ResponseEntity<BookDTO> createBook(@RequestBody BookDTO bookDTORequest){
     
         Book existingBook = bookService.findBookByIsbn( bookDTORequest.getIsbn() );
@@ -108,7 +120,7 @@ public class BookRestController {
         return new ResponseEntity<BookDTO>(HttpStatus.NOT_MODIFIED);
     }
     
-    
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/updateBook")
     public ResponseEntity<BookDTO> updateBook(@RequestBody BookDTO bookDTORequest) {
         
@@ -126,6 +138,7 @@ public class BookRestController {
         return new ResponseEntity<BookDTO>(HttpStatus.NOT_MODIFIED);
     }
     
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/deleteBook/{bookid}")
     public ResponseEntity<String> deleteCustomer(@PathVariable Integer bookid){
         bookService.deleteBook( bookid );

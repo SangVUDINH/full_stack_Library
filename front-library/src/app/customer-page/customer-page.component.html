@@ -1,1 +1,90 @@
-<p>customer-page works!</p>
+<div style="display: block; margin: auto; width: 60%; margin-block: 2%;">
+    <form [formGroup]="searchFormCustomer" (ngSubmit)="onSubmitFormSearch()" class="form-inline my-2 my-lg-0">
+  
+      <select class="form-control" id="typeSearchBy"  formControlName="typeSearchBy" formControlName="typeSearchBy">
+        <option  value="lastName">Nom</option>
+        <option  value="email">E-mail</option>
+      </select>
+      
+      <input class="form-control mr-sm-2" type="text" id="searchValue" placeholder="Search" formControlName="searchValue" >
+      <button class="btn btn-primary " type="submit" >Search</button>
+    </form>    
+
+    <button class="btn btn-primary" id="addCustomer" (click)="openAddCustomerDialog()">Ajouter un client</button>
+  </div>
+
+  <div style="display: block; margin: auto; width: 80%;">
+    <table class="table table-hover" >
+      <thead>
+        <tr>
+          <th scope="col">PRENOM</th>
+          <th scope="col">NOM</th>
+          <th scope="col">EMPLOIE</th>
+          <th scope="col">ADDRESS</th>
+          <th scope="col">EMAIL</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let element of this.searchCustomerResult">
+          <td>{{element.firstname}}</td>
+          <td>{{element.lastname}}</td>
+          <td>{{element.job}}</td>
+          <td>{{element.address}}</td>
+          <td>{{element.email}}</td>
+          <td> 
+            <button class="btn btn-primary" (click)="openAddCustomerDialog(element)">UPDATE</button>
+            <button class="btn btn-danger" (click)="deleteCustomer(element)">DELETE</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  
+  <dialog id="formDialog" style=" width: 60%;">
+    <div >
+      <form [formGroup]="customerForm" >
+          <fieldset>
+            <legend>Creation client</legend>
+  
+            <div class="form-group">
+              <label for="firstname">Prenom</label>
+              <input  class="form-control" id="firstname"  
+              formControlName="firstname">
+            </div>
+  
+            <div class="form-group">
+              <label for="lastname">Nom</label>
+              <input  class="form-control" id="lastname"  
+              formControlName="lastname">
+            </div>
+  
+            <div class="form-group">
+              <label for="job">Travail</label>
+              <input  class="form-control"  id="job"
+              formControlName="job">
+              
+            </div>
+  
+            <div class="form-group">
+              <label for="address">Addresse</label>
+              <input  class="form-control"  id="address"
+              formControlName="address">
+            </div>
+  
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input  class="form-control" type="email" id="email" 
+              formControlName="email">
+            </div>
+   
+            <button class="btn btn-primary" (click)="this.isCreate? onSubmitForm(): onSubmitFormUpdate()">Valider</button>
+            <button class="btn btn-primary" (click)="this.closeDialog()"  style="margin-left: 15%;">Annuler</button>
+          </fieldset>
+        </form>
+  </div>
+  
+  </dialog>
+
+  

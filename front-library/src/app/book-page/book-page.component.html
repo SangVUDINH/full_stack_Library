@@ -1,54 +1,99 @@
-<p>book-page works!</p>
-
-<ul>
-    <li *ngFor="let category of categories">{{ category.code}}  ||  {{category.label}}</li>
-</ul>
-
-
-
-<div  style="display: block; margin: auto; width: 60%;">
-
-    <form>
+<dialog id="formDialog" style=" width: 60%;">
+  <div >
+    <form [formGroup]="livreForm" >
         <fieldset>
           <legend>Creation du livre</legend>
 
           <div class="form-group">
             <label for="titre">Titre</label>
-            <input  class="form-control" id="titre"  placeholder="Rentrez le titre du livre">
+            <input  class="form-control" id="titre"  placeholder="Rentrez le titre du livre"
+            formControlName="titre">
           </div>
 
           <div class="form-group">
             <label for="isbn">Isbn</label>
-            <input  class="form-control" id="isbn"  placeholder="Rentrez l'isbn du livre">
+            <input  class="form-control" id="isbn"  placeholder="Rentrez l'isbn du livre"
+            formControlName="isbn">
           </div>
 
           <div class="form-group">
             <label for="auteur">Auteur</label>
-            <input  class="form-control"  id="auteur">
+            <input  class="form-control"  id="auteur"
+            formControlName="auteur">
+            
           </div>
 
           <div class="form-group">
             <label for="totalexemplaire">Le nombre d'examplaire</label>
-            <input  class="form-control" type="number" id="totalexemplaire">
+            <input  class="form-control" type="number" id="totalexemplaire"
+            formControlName="totalexamplaire">
           </div>
 
           <div class="form-group">
             <label for="date_sortie">Date sortie</label>
-            <input  class="form-control" type="date" id="date_sortie" >
+            <input  class="form-control" type="date" id="date_sortie" 
+            formControlName="date_sortie">
           </div>
-
-
 
           <div class="form-group">
             <label for="category">Category</label>
-            <select class="form-control" id="category">
-              <option *ngFor="let category of categories">{{ category.label }}</option>
+            <select class="form-control" id="category"  formControlName="category">
+              <option *ngFor="let category of categories" value="{{category.label}}">{{ category.label }}</option>
    
             </select>
-          </div>
-  
+          </div>  
 
-          <button type="submit" class="btn btn-primary">Valider</button>
+          <button class="btn btn-primary" (click)="this.isCreate? onSubmitForm(): onSubmitFormUpdate()">Valider</button>
+          <button class="btn btn-primary" (click)="this.closeDialog()"  style="margin-left: 15%;">Annuler</button>
         </fieldset>
       </form>
 </div>
+
+</dialog>
+
+
+<div style="display: block; margin: auto; width: 60%; margin-block: 2%;">
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmitFormSearch()" class="form-inline my-2 my-lg-0">
+
+    <select class="form-control" id="typeSearchBy"  formControlName="typeSearchBy" formControlName="typeSearchBy">
+      <option  value="isbn">isbn</option>
+      <option  value="title">titre</option>
+    </select>
+    
+    <input class="form-control mr-sm-2" type="text" id="searchValue" placeholder="Search" formControlName="searchValue" >
+    <button class="btn btn-primary " type="submit" >Search</button>
+  </form>
+  <button class="btn btn-primary" id="addBook" (click)="openAddBookDialog()">Ajouter un livre</button>
+  
+</div>
+
+<div style="display: block; margin: auto; width: 80%;">
+  <table class="table table-hover" >
+    <thead>
+      <tr>
+        <th scope="col">Titre</th>
+        <th scope="col">Isbn</th>
+        <th scope="col">Auteur</th>
+        <th scope="col">Category</th>
+        <th scope="col">Date sortie</th>
+        <th scope="col">Total Exemplaire</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let element of this.searchBookResult">
+        <td>{{element.title}}</td>
+        <td>{{element.isbn}}</td>
+        <td>{{element.author}}</td>
+        <td>{{element.category.label}}</td>
+        <td>{{element.releaseDate}}</td>
+        <td>{{element.totalExamplaries}}</td>
+        <td> 
+          <button class="btn btn-primary" (click)="openAddBookDialog(element)">UPDATE</button>
+          <button class="btn btn-danger" (click)="deleteBook(element)">DELETE</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+

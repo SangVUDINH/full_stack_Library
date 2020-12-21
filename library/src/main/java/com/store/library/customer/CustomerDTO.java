@@ -25,8 +25,7 @@ public class CustomerDTO  {
     @ApiModelProperty(value = "Customer email")
     private String email;
     
-    @ApiModelProperty(value = "Customer creation date in the system")
-    private LocalDate creationdate;
+
 
     public Integer getId() {
         return id;
@@ -76,13 +75,6 @@ public class CustomerDTO  {
         this.email = email;
     }
 
-    public LocalDate getCreationdate() {
-        return creationdate;
-    }
-
-    public void setCreationdate( LocalDate creationdate ) {
-        this.creationdate = creationdate;
-    }
-
+ 
     
 }

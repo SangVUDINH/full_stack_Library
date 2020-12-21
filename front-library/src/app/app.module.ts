@@ -9,6 +9,9 @@ import { LoanPageComponent } from './loan-page/loan-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './menu/menu.component';
 import { LandingComponent } from './landing/landing.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BookService } from './services/book.service';
+import { CustomerService } from './services/customer.service';
 
 @NgModule({
   declarations: [
@@ -22,10 +25,11 @@ import { LandingComponent } from './landing/landing.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
     
   ],
-  providers: [],
+  providers: [BookService, CustomerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
