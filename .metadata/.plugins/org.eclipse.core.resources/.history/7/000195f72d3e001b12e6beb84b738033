@@ -1,9 +1,0 @@
-package com.store.library.loan;
-
-public class LoanDTO {
-    
-    private BookDTO bookDTO = new BookDTO();
-    private CustomerDTO customerDTO = new CustomerDTO();
-    
-
-}

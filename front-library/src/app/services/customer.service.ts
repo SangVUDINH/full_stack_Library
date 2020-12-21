@@ -21,7 +21,7 @@ export class CustomerService {
   }
 
   deleteCustomer(customer:Customer): Observable<string>{
-    return this.http.delete<string>(this.URLHttp+'/rest/customer/deleteCustomer/'+ customer.id);
+    return this.http.delete<string>(this.URLHttp+'/rest/customer/api/deleteCustomer/'+ customer.id);
   }
 
   searchCustomerByEmail(email: string): Observable<Customer[]>{

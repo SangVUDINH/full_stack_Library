@@ -43,4 +43,6 @@
 <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.CrossOrigin"/>
 <fullyQualifiedTypeName name="com.store.library.book.BookDTO"/>
+<fullyQualifiedTypeName name="com.store.library.customer.CustomerServiceImpl"/>
+<fullyQualifiedTypeName name="com.store.library.customer.CustomerDTO"/>
 </qualifiedTypeNameHistroy>
