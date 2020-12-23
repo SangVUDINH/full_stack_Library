@@ -26,9 +26,6 @@ CREATE TABLE books (
 );
 
 
-INSERT INTO category(label) VALUES ("ACTION"),("SF"),("dada");
-
-
 CREATE TABLE customers (
     id      int    	PRIMARY KEY AUTO_INCREMENT,
     firstname     	varchar(30),
@@ -38,6 +35,7 @@ CREATE TABLE customers (
     email			varchar(30),
     creationdate	datetime	DEFAULT CURRENT_TIMESTAMP
 );
+
 
 CREATE TABLE loans (
 	bookid 				int NOT NULL REFERENCES books(idbook),
@@ -50,6 +48,3 @@ CREATE TABLE loans (
 	
 	PRIMARY KEY (bookid, customerid, creationdatetime)	
 );
-
-
-

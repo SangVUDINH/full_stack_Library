@@ -211,7 +211,7 @@ export class BookPageComponent implements OnInit {
 
   getCategory(label: string){    
     for (let element of this.categories){
-      if (label = element.label){
+      if (label == element.label){
         return element;
       }
     }
