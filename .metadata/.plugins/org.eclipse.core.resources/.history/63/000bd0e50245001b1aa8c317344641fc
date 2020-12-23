@@ -1,0 +1,137 @@
+package com.store.library.loan;
+
+import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.store.library.book.Book;
+import com.store.library.customer.Customer;
+
+@CrossOrigin(origins = "http://localhost:4200")
+@RestController
+@RequestMapping("rest/loan/api")
+public class LoanRestController {
+    public static final Logger LOGGER = LoggerFactory.getLogger(LoanRestController.class);
+    
+    @Autowired 
+    private LoanServiceImpl loanService;
+    
+    @GetMapping("/allloans")
+    public ResponseEntity<List<Loan>> getAllLoans(){        
+        List<Loan> loans = loanService.getAllLoan();
+        if(!CollectionUtils.isEmpty( loans )) {
+            loans.removeAll( Collections.singleton( null ) );
+            return new ResponseEntity<List<Loan>>(loans,HttpStatus.OK);
+        }       
+        
+        return new ResponseEntity<List<Loan>>(HttpStatus.NO_CONTENT);
+    }
+    
+    @PostMapping("/addLoan")
+    public ResponseEntity<Boolean> createNewLoan(@RequestBody SimpleLoanDTO loanDTORequest ){
+        
+        boolean isLoanExists = loanService.checkIfLoanExists(loanDTORequest);
+        if (isLoanExists) {
+            return new ResponseEntity<Boolean>(false, HttpStatus.CONFLICT);
+        }
+        
+        Loan loanRequest = mapSimpleLoanDTOToLoan(loanDTORequest);
+        Loan loan = loanService.saveLoan( loanRequest ); 
+        if (loan != null) {
+            return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<Boolean>(false, HttpStatus.NOT_MODIFIED);  
+    }
+    
+    @GetMapping("/maxEndDate")
+    public ResponseEntity<List<LoanDTO>> searchAllBooksLoanBeforeThisDate(@RequestParam("date") String maxEndDateStr) {
+        
+        List<Loan> loans = loanService.findAllLoansByEndDateBefore( LocalDate.parse( maxEndDateStr ) );
+        loans.removeAll(Collections.singleton(null));
+        List<LoanDTO> loanInfosDtos = mapLoanDtosFromLoans(loans);
+        return new ResponseEntity<List<LoanDTO>>(loanInfosDtos, HttpStatus.OK);
+    }
+    
+    @GetMapping("/customerLoans")
+    public ResponseEntity<List<LoanDTO>> searchAllOpenedLoansOfThisCustomer(@RequestParam("email") String email){
+        List<Loan> loans = loanService.getAllOpenLoansOfThisCustomer(email, LoanStatus.OPEN);
+        
+        loans.removeAll(Collections.singleton( null ));
+        List<LoanDTO> loanInfosDtos = mapLoanDtosFromLoans(loans);
+        return new ResponseEntity<List<LoanDTO>> (loanInfosDtos, HttpStatus.OK);
+    }
+    
+    @PostMapping("/closeLoan")
+    public ResponseEntity<Boolean> closeLoan(@RequestBody SimpleLoanDTO simpleLoanDTORequest) {
+        Loan existingLoan = loanService.getOpenedLoan( simpleLoanDTORequest );
+        
+        if (existingLoan == null) {
+            return new ResponseEntity<Boolean>(false, HttpStatus.NO_CONTENT);
+        }
+        
+        existingLoan.setStatus( LoanStatus.CLOSE );
+        Loan loan = loanService.saveLoan( existingLoan );
+        if (loan != null) {
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        }
+        
+        return new ResponseEntity<Boolean>(HttpStatus.NOT_MODIFIED);
+    }
+
+    private List<LoanDTO> mapLoanDtosFromLoans( List<Loan> loans ) {
+        Function<Loan, LoanDTO> mapperFunction = (loan) -> {
+            LoanDTO  loanDTO = new LoanDTO();
+            
+            loanDTO.getBookDTO().setIdbook( loan.getPk().getBook().getIdbook() );
+            loanDTO.getBookDTO().setIsbn( loan.getPk().getBook().getIsbn() );
+            loanDTO.getBookDTO().setTitle( loan.getPk().getBook().getTitle() );                       
+                        
+            loanDTO.getCustomerDTO().setId( loan.getPk().getCustomer().getId() );
+            loanDTO.getCustomerDTO().setFirstname( loan.getPk().getCustomer().getFirstname() );
+            loanDTO.getCustomerDTO().setLastname( loan.getPk().getCustomer().getLastname() );
+            loanDTO.getCustomerDTO().setEmail( loan.getPk().getCustomer().getEmail() );
+
+            loanDTO.setLoanbegindate( loan.getBegindate() );
+            loanDTO.setLoanenddate( loan.getEnddate() );
+            
+            return loanDTO;
+        };
+        
+        if(!CollectionUtils.isEmpty( loans )) {
+            return loans.stream().map(mapperFunction).sorted().collect( Collectors.toList() );
+        }
+        
+        return null;
+    }
+
+    private Loan mapSimpleLoanDTOToLoan( SimpleLoanDTO loanDTORequest ) {
+        Loan loan = new Loan();
+        Book book = new Book();
+        book.setIdbook(loanDTORequest.getBookid());
+        Customer customer = new Customer();
+        customer.setId(loanDTORequest.getCustomerid());
+        LoanId loanId = new LoanId(book, customer);
+        loan.setPk(loanId);
+        loan.setBegindate(loanDTORequest.getBegindate());
+        loan.setEnddate(loanDTORequest.getEnddate());
+        loan.setStatus(LoanStatus.OPEN);
+        return loan;
+    }
+   
+}

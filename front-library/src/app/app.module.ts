@@ -12,6 +12,7 @@ import { LandingComponent } from './landing/landing.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BookService } from './services/book.service';
 import { CustomerService } from './services/customer.service';
+import { LoanService } from './services/loan.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { CustomerService } from './services/customer.service';
     ReactiveFormsModule
     
   ],
-  providers: [BookService, CustomerService],
+  providers: [BookService, CustomerService, LoanService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

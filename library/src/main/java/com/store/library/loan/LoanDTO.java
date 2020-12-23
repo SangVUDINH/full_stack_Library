@@ -12,6 +12,17 @@ public class LoanDTO implements Comparable<LoanDTO>  {
     
     private LocalDate loanbegindate;
     private LocalDate loanenddate;
+    
+    private LoanStatus status;
+    
+    
+    
+    public LoanStatus getStatus() {
+        return status;
+    }
+    public void setStatus( LoanStatus status ) {
+        this.status = status;
+    }
     public BookDTO getBookDTO() {
         return bookDTO;
     }

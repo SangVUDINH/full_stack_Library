@@ -27,7 +27,7 @@ CREATE TABLE books (
 
 
 INSERT INTO category(label) VALUES ("ACTION"),("SF"),("dada");
-INSERT INTO books(title,isbn,totalexamplaries,author,cat_code) VALUES ("titleAction","dsaqhjkdsqjkhdfsq",50,"author","1"),("titleAction22","dsaqhjkdsqjkhdfsq",502,"author","2");
+INSERT INTO books(title,isbn,totalexamplaries,author,cat_code) VALUES ("titleAction","isbn1",50,"author","1"),("titleAction22","isbn2",502,"author","2");
 
 
 CREATE TABLE customers (
@@ -54,6 +54,6 @@ CREATE TABLE loans (
 	PRIMARY KEY (bookid, customerid, creationdatetime)	
 );
 
-INSERT INTO loans(bookid, customerid, creationdatetime) VALUES ( 1,1,NOW()),( 1,2,NOW());
+INSERT INTO loans(bookid, customerid, status,enddate) VALUES ( 1,1,"OPEN","2021-1-1"),( 1,2,"OPEN","2021-1-1");
 
 

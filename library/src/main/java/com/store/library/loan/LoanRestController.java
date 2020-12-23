@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.store.library.book.Book;
 import com.store.library.customer.Customer;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("rest/loan/api")
 public class LoanRestController {
@@ -66,6 +68,7 @@ public class LoanRestController {
         return new ResponseEntity<List<LoanDTO>>(loanInfosDtos, HttpStatus.OK);
     }
     
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/customerLoans")
     public ResponseEntity<List<LoanDTO>> searchAllOpenedLoansOfThisCustomer(@RequestParam("email") String email){
         List<Loan> loans = loanService.getAllOpenLoansOfThisCustomer(email, LoanStatus.OPEN);
@@ -107,6 +110,8 @@ public class LoanRestController {
 
             loanDTO.setLoanbegindate( loan.getBegindate() );
             loanDTO.setLoanenddate( loan.getEnddate() );
+            loanDTO.setStatus( loan.getStatus() );
+            
             
             return loanDTO;
         };
