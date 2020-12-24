@@ -45,4 +45,7 @@
 <fullyQualifiedTypeName name="com.store.library.book.BookDTO"/>
 <fullyQualifiedTypeName name="com.store.library.customer.CustomerServiceImpl"/>
 <fullyQualifiedTypeName name="com.store.library.customer.CustomerDTO"/>
+<fullyQualifiedTypeName name="org.springframework.util.StringUtils"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>

@@ -5,19 +5,38 @@ import java.time.LocalDate;
 
 import com.store.library.category.CategoryDTO;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 
 
+@ApiModel(value = "Book Model")
 public class BookDTO implements Comparable<BookDTO>{
     
 
+    @ApiModelProperty(value = "Book id")
     private Integer idbook;
-    private String title;   
-    private String isbn;    
+    
+    @ApiModelProperty(value = "Book title")
+    private String title;  
+    
+    @ApiModelProperty(value = "Book isbn")
+    private String isbn;
+    
+    
+    @ApiModelProperty(value = "Book release date by the editor")
     private LocalDate releaseDate;
-    private LocalDate registerDate;
+    
+    @ApiModelProperty(value = "Book register date in the library")
+    private LocalDate registerDate;   
+
+    @ApiModelProperty(value = "Book total examplaries")
     private Integer totalExamplaries;  
+    
+    @ApiModelProperty(value = "Book author")
     private String author;
+    
+    @ApiModelProperty(value = "Book category")
     private CategoryDTO category;
 
 

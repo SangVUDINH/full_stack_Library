@@ -23,9 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.store.library.book.Book;
 import com.store.library.customer.Customer;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("rest/loan/api")
+@Api(value = "Loan Rest Controller: contains all operations for managing loans")
 public class LoanRestController {
     public static final Logger LOGGER = LoggerFactory.getLogger(LoanRestController.class);
     
@@ -44,6 +50,10 @@ public class LoanRestController {
     }
     
     @PostMapping("/addLoan")
+    @ApiOperation(value = "Add a new Loan in the Library", response = LoanDTO.class)
+    @ApiResponses(value = { @ApiResponse(code = 409, message = "Conflict: the loan already exist"),
+            @ApiResponse(code = 201, message = "Created: the loan is successfully inserted"),
+            @ApiResponse(code = 304, message = "Not Modified: the loan is unsuccessfully inserted") })
     public ResponseEntity<Boolean> createNewLoan(@RequestBody SimpleLoanDTO loanDTORequest ){
         
         boolean isLoanExists = loanService.checkIfLoanExists(loanDTORequest);
@@ -60,6 +70,8 @@ public class LoanRestController {
     }
     
     @GetMapping("/maxEndDate")
+    @ApiOperation(value="List loans realized before the indicated date", response = List.class)
+    @ApiResponse(code = 200, message = "Ok: successfully listed")
     public ResponseEntity<List<LoanDTO>> searchAllBooksLoanBeforeThisDate(@RequestParam("date") String maxEndDateStr) {
         
         List<Loan> loans = loanService.findAllLoansByEndDateBefore( LocalDate.parse( maxEndDateStr ) );
@@ -70,6 +82,8 @@ public class LoanRestController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/customerLoans")
+    @ApiOperation(value="List loans realized before the indicated date", response = List.class)
+    @ApiResponse(code = 200, message = "Ok: successfully listed")
     public ResponseEntity<List<LoanDTO>> searchAllOpenedLoansOfThisCustomer(@RequestParam("email") String email){
         List<Loan> loans = loanService.getAllOpenLoansOfThisCustomer(email, LoanStatus.OPEN);
         
@@ -79,6 +93,10 @@ public class LoanRestController {
     }
     
     @PostMapping("/closeLoan")
+    @ApiOperation(value = "Marks as close a Loan in the Library", response = Boolean.class)
+    @ApiResponses(value = { @ApiResponse(code = 204, message = "No Content: no loan founded"),
+            @ApiResponse(code = 200, message = "Ok: the loan is successfully closed"),
+            @ApiResponse(code = 304, message = "Not Modified: the loan is unsuccessfully closed") })
     public ResponseEntity<Boolean> closeLoan(@RequestBody SimpleLoanDTO simpleLoanDTORequest) {
         Loan existingLoan = loanService.getOpenedLoan( simpleLoanDTORequest );
         

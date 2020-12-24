@@ -27,9 +27,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("rest/customer/api")
+@Api(value = "Customer Rest Controller: contains all operations for managing customers")
 public class CustomerRestController {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(CustomerRestController.class);
@@ -42,6 +48,11 @@ public class CustomerRestController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/searchByLastName")
+    @ApiOperation(value="Search a customer in the Library by its Last name", response = List.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Ok: successfull research"),
+            @ApiResponse(code = 204, message = "No Content: no result founded"),
+    })
     public ResponseEntity<List<CustomerDTO>> searchCustomerByLastName(@RequestParam("lastname") String lastname){
         
         List<Customer> customers = customerService.findCustomerByLastName( lastname );
@@ -60,6 +71,11 @@ public class CustomerRestController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/searchByEmail")
+    @ApiOperation(value="Search a customer in the Library by its email", response = CustomerDTO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Ok: successfull research"),
+            @ApiResponse(code = 204, message = "No Content: no result founded"),
+    })
     public ResponseEntity<CustomerDTO> searchCustomerByEmail(@RequestParam("email") String email) {
 
         Customer customer = customerService.findCustomerByEmail(email);
@@ -72,6 +88,10 @@ public class CustomerRestController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("addCustomer")
+    @ApiOperation(value = "Add a new Customer in the Library", response = CustomerDTO.class)
+    @ApiResponses(value = { @ApiResponse(code = 409, message = "Conflict: the customer already exist"),
+            @ApiResponse(code = 201, message = "Created: the customer is successfully inserted"),
+            @ApiResponse(code = 304, message = "Not Modified: the customer is unsuccessfully inserted") })
     public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTORequest){
         Customer existingCustomer = customerService.findCustomerByEmail( customerDTORequest.getEmail());
         if(existingCustomer !=null) {
@@ -91,6 +111,10 @@ public class CustomerRestController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/updateCustomer")
+    @ApiOperation(value = "Update/Modify an existing customer in the Library", response = CustomerDTO.class)
+    @ApiResponses(value = { @ApiResponse(code = 404, message = "Not Found : the customer does not exist"),
+            @ApiResponse(code = 200, message = "Ok: the customer is successfully updated"),
+            @ApiResponse(code = 304, message = "Not Modified: the customer is unsuccessfully updated") })
     public ResponseEntity<CustomerDTO> updateCustomer(@RequestBody CustomerDTO customerDTORequest){
         
         if(!customerService.checkIfIdexists( customerDTORequest.getId() )) {
@@ -111,6 +135,8 @@ public class CustomerRestController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/deleteCustomer/{customerid}")
+    @ApiOperation(value = "Delete a customer in the Library, if the customer does not exist, nothing is done", response = String.class)
+    @ApiResponse(code = 204, message = "No Content: customer sucessfully deleted")
     public ResponseEntity<String> deleteCustomer(@PathVariable Integer customerid){
         customerService.deleteCustomer( customerid );
         return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
@@ -119,6 +145,11 @@ public class CustomerRestController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/paginatedSearch")
+    @ApiOperation(value="List customers of the Library in a paginated way", response = List.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Ok: successfully listed"),
+            @ApiResponse(code = 204, message = "No Content: no result founded"),
+    })
     public ResponseEntity<List<CustomerDTO>> searchCustomers(@RequestParam("beginPage") int beginPage,
             @RequestParam("endPage") int endPage) {
         //, UriComponentsBuilder uriComponentBuilder
@@ -133,6 +164,12 @@ public class CustomerRestController {
     }
     
     @PutMapping("/sendEmailToCustomer")
+    @ApiOperation(value="Send an email to customer of the Library", response = String.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Ok: Email successfully sent"),
+            @ApiResponse(code = 404, message = "Not Found: no customer found, or wrong email"),
+            @ApiResponse(code = 403, message = "Forbidden: Email cannot be sent")
+    })
     public ResponseEntity<Boolean> sendMailToCustomer(@RequestBody MailDTO mailDTO){
         Customer customer = customerService.findCustomerById( mailDTO.getCustomerId() );
         if(customer == null) {

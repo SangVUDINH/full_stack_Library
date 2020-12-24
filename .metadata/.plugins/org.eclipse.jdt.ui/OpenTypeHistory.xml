@@ -4,5 +4,5 @@
 <typeInfo handle="=library/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.store.library.book{IBookService.java[IBookService" modifiers="513" timestamp="1607439889183"/>
 <typeInfo handle="=library/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.store.library.category{ICategoryDao.java[ICategoryDao" modifiers="513" timestamp="1607375958532"/>
 <typeInfo handle="=library/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.store.library.customer{ICustomerService.java[ICustomerService" modifiers="513" timestamp="1607445367237"/>
-<typeInfo handle="=library/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.store.library.loan{ILoanService.java[ILoanService" modifiers="513" timestamp="1607967737523"/>
+<typeInfo handle="=library/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.store.library.loan{ILoanService.java[ILoanService" modifiers="513" timestamp="1608731519836"/>
 </typeInfoHistroy>

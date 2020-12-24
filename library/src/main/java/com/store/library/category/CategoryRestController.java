@@ -16,8 +16,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("rest/category/api")
+@Api(value = "Book Category Rest Controller")
 public class CategoryRestController {
     public static final Logger LOGGER = LoggerFactory.getLogger(CategoryRestController.class);
     
@@ -26,6 +32,11 @@ public class CategoryRestController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/all")
+    @ApiOperation(value="List all book categories of the Library", response = List.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Ok: successfully listed"),
+            @ApiResponse(code = 204, message = "No Content: no result founded"),
+    })
     public ResponseEntity<List<CategoryDTO>> getAllCategories (){
         
         List<Category> categories = categoryService.getAllCategories();

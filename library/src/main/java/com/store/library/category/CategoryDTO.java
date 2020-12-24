@@ -1,10 +1,9 @@
 package com.store.library.category;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-import com.store.library.book.Book;
-
+@ApiModel(value = "Category Model")
 public class CategoryDTO implements Comparable<CategoryDTO> {
 
     public CategoryDTO() {
@@ -16,9 +15,10 @@ public class CategoryDTO implements Comparable<CategoryDTO> {
         this.label = label;
     }
 
-
+    @ApiModelProperty(value = "Category code")
     private Integer code;
-
+    
+    @ApiModelProperty(value = "Category label")
     private String label;
     
     public Integer getCode() {

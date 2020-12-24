@@ -47,6 +47,11 @@ public class BookRestController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/searchByTitle")
+    @ApiOperation(value="Search Books in the Library by title", response = List.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Ok: successfull research"),
+            @ApiResponse(code = 204, message = "No Content: no result founded"),
+    })
     public ResponseEntity<List<BookDTO>> searchBookByTitle(@RequestParam("title") String title,
                 UriComponentsBuilder uriComponentBuilder){
         
@@ -63,24 +68,7 @@ public class BookRestController {
         return new ResponseEntity<List<BookDTO>>(HttpStatus.NO_CONTENT);
     }
     
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/booksByCategory")
-    public ResponseEntity<List<BookDTO>> getBooksByCategory(@RequestParam("category_code") Integer cat_code){
-        
-        List<Book> books = bookService.getBooksByCategory( cat_code );
-        
-        if(!CollectionUtils.isEmpty(books)) {
-            books.removeAll( Collections.singleton( null ) );
-            
-            List<BookDTO> bookDTOs= books.parallelStream().map( 
-                    book ->{    return mapBookToBookDTO(book);
-                }).collect(Collectors.toList());
-            return new ResponseEntity<List<BookDTO>>(bookDTOs,HttpStatus.OK);
-        }
-        
-        return new ResponseEntity<List<BookDTO>>(HttpStatus.NO_CONTENT);
-    }
-        
+           
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("searchByIsbn")
     public ResponseEntity <BookDTO> searchBookByIsbn(@RequestParam("isbn") String isbn){
@@ -122,6 +110,10 @@ public class BookRestController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/updateBook")
+    @ApiOperation(value = "Update/Modify an existing Book in the Library", response = BookDTO.class)
+    @ApiResponses(value = { @ApiResponse(code = 404, message = "Not Found : the book does not exist"),
+            @ApiResponse(code = 200, message = "Ok: the book is successfully updated"),
+            @ApiResponse(code = 304, message = "Not Modified: the book is unsuccessfully updated") })
     public ResponseEntity<BookDTO> updateBook(@RequestBody BookDTO bookDTORequest) {
         
         if (!bookService.checkIfIdexists(bookDTORequest.getIdbook())) {
@@ -140,6 +132,8 @@ public class BookRestController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/deleteBook/{bookid}")
+    @ApiOperation(value = "Delete a Book in the Library, if the book does not exist, nothing is done", response = String.class)
+    @ApiResponse(code = 204, message = "No Content: Book sucessfully deleted")
     public ResponseEntity<String> deleteCustomer(@PathVariable Integer bookid){
         bookService.deleteBook( bookid );
         return new ResponseEntity<String>(HttpStatus.NO_CONTENT);

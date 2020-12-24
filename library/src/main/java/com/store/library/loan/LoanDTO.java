@@ -5,12 +5,23 @@ import java.time.LocalDate;
 import com.store.library.book.BookDTO;
 import com.store.library.customer.CustomerDTO;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+
+@ApiModel(value = "Loan Model")
 public class LoanDTO implements Comparable<LoanDTO>  {
     
+    @ApiModelProperty(value = "Book concerned by the loan")
     private BookDTO bookDTO = new BookDTO();
+    
+    @ApiModelProperty(value = "Customer concerned by the loan")
     private CustomerDTO customerDTO = new CustomerDTO();
     
+    @ApiModelProperty(value = "Loan begining date")
     private LocalDate loanbegindate;
+    
+    @ApiModelProperty(value = "Loan ending date")
     private LocalDate loanenddate;
     
     private LoanStatus status;

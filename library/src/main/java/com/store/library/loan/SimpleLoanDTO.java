@@ -2,13 +2,22 @@ package com.store.library.loan;
 
 import java.time.LocalDate;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 
+@ApiModel(value = "Simple Loan Model")
 public class SimpleLoanDTO {
-   
+   @ApiModelProperty(value = "Book id concerned by the loan")
    private Integer bookid;
+
+   @ApiModelProperty(value = "Customer id concerned by the loan")
    private Integer customerid;
+   
+   @ApiModelProperty(value = "Loan begining date")
    private LocalDate begindate;
+   
+   @ApiModelProperty(value = "Loan ending date")
    private LocalDate enddate;
      
    
