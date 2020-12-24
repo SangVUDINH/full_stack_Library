@@ -33,8 +33,10 @@
           <td>{{element.address}}</td>
           <td>{{element.email}}</td>
           <td> 
+            <button class="btn btn-primary" (click)="openEmailCustomerDialog(element)">EMAIL</button>
             <button class="btn btn-primary" (click)="openAddCustomerDialog(element)">UPDATE</button>
             <button class="btn btn-danger" (click)="deleteCustomer(element)">DELETE</button>
+            
           </td>
         </tr>
       </tbody>
@@ -46,7 +48,7 @@
     <div >
       <form [formGroup]="customerForm" >
           <fieldset>
-            <legend>Creation client</legend>
+            <legend>CLIENT</legend>
   
             <div class="form-group">
               <label for="firstname">Prenom</label>
@@ -63,8 +65,7 @@
             <div class="form-group">
               <label for="job">Travail</label>
               <input  class="form-control"  id="job"
-              formControlName="job">
-              
+              formControlName="job">              
             </div>
   
             <div class="form-group">
@@ -83,8 +84,33 @@
             <button class="btn btn-primary" (click)="this.closeDialog()"  style="margin-left: 15%;">Annuler</button>
           </fieldset>
         </form>
-  </div>
+    </div>  
+  </dialog>
+
+
+  <dialog id="formEmailDialog" style=" width: 60%;">
+    <div >
+      <form [formGroup]="emailForm" >
+          <fieldset>
+            <legend>EMAIL</legend>
   
+            <div class="form-group">
+              <label for="emailSubject">Email Objet</label>
+              <input  class="form-control" id="emailSubject"  
+              formControlName="emailSubject">
+            </div>
+  
+            <div class="form-group">
+              <label for="lastname">Email Message</label>
+              <textarea  class="form-control" id="emailContent" 
+              formControlName="emailContent"></textarea>
+            </div>
+   
+            <button class="btn btn-primary" (click)="onSubmitEmailForm()">Valider</button>
+            <button class="btn btn-primary" (click)="closeEmailDialog()"  style="margin-left: 15%;">Annuler</button>
+          </fieldset>
+        </form>
+    </div>  
   </dialog>
 
   

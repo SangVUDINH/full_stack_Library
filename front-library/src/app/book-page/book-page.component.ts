@@ -31,8 +31,6 @@ export class BookPageComponent implements OnInit {
   loadCategories() {
     this.bookService.loadCategories().subscribe(
       (result: Category[])=>{
-          console.log(result);
-          console.log("result");
           this.categories.push.apply(this.categories, result);
       },
       error =>{

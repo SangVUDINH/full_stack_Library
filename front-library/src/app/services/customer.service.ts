@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Customer } from '../models/customer';
+import { Mail } from '../models/Mail';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,10 @@ export class CustomerService {
 
   searchCustomerByLastName(lastname: string): Observable<Customer[]>{
     return this.http.get<Customer[]>(this.URLHttp+'/rest/customer/api/searchByLastName?lastname='+lastname);
+  }
+
+  sendEmail(mail: Mail): Observable<boolean>{
+    return this.http.put<boolean>(this.URLHttp+'/rest/customer/api/sendEmailToCustomer',mail);
   }
 
 }

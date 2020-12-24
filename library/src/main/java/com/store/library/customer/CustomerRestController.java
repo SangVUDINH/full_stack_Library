@@ -1,6 +1,7 @@
 package com.store.library.customer;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +36,9 @@ public class CustomerRestController {
 
     @Autowired
     private CustomerServiceImpl customerService;
+    
+    @Autowired
+    private JavaMailSender javaMailSender;
     
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/searchByLastName")
@@ -123,6 +130,38 @@ public class CustomerRestController {
             return new ResponseEntity<List<CustomerDTO>>(customerDTOs, HttpStatus.OK);
         }
         return new ResponseEntity<List<CustomerDTO>>(HttpStatus.NO_CONTENT);
+    }
+    
+    @PutMapping("/sendEmailToCustomer")
+    public ResponseEntity<Boolean> sendMailToCustomer(@RequestBody MailDTO mailDTO){
+        Customer customer = customerService.findCustomerById( mailDTO.getCustomerId() );
+        if(customer == null) {
+            String errorMessage="customer NOT FOUND";
+            LOGGER.info( errorMessage );
+            return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
+        } else if( customer != null && customer.getEmail() == null){
+            String errorMessage="email NOT FOUND";
+            LOGGER.info( errorMessage );
+            return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
+        }
+        System.out.println(mailDTO);
+        System.out.println(customer.getEmail());
+        
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setFrom(mailDTO.MAIL_FROM);
+        mail.setTo( customer.getEmail() );
+        mail.setSentDate( new Date() );
+        mail.setSubject( mailDTO.getEmailSubject() );
+        mail.setText( mailDTO.getEmailContent() );
+        
+        try {
+            javaMailSender.send(mail);
+        } catch (MailException e) {
+            System.out.println(e);
+            return new ResponseEntity<Boolean>(false, HttpStatus.FORBIDDEN);
+        }
+        
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
           
     private Customer mapCustomerDTOToCustomer( CustomerDTO customerDTORequest ) {

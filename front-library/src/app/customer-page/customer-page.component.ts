@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Customer } from '../models/customer';
+import { Mail } from '../models/Mail';
 import { CustomerService } from '../services/customer.service';
 
 @Component({
@@ -14,8 +15,11 @@ export class CustomerPageComponent implements OnInit {
   public searchCustomerResult: Customer[]=[];
   searchFormCustomer  : FormGroup;
   customerForm        : FormGroup;
+  emailForm        : FormGroup;
+
   isCreate: boolean =true;
   customerUpdate: Customer;
+  customerEmail: Customer;
 
   constructor(private formBuilder: FormBuilder, private customerService: CustomerService) { }
 
@@ -35,6 +39,11 @@ export class CustomerPageComponent implements OnInit {
     this.searchFormCustomer = this.formBuilder.group({
       typeSearchBy:'lastName',
       searchValue:''
+    })
+
+    this.emailForm = this.formBuilder.group({
+      emailSubject:'',
+      emailContent:''
     })
   }
 
@@ -140,7 +149,6 @@ export class CustomerPageComponent implements OnInit {
             this.searchCustomerResult.splice(i,1);
           }
         }
-
         console.log(result);
       }, error =>{
         console.log(error);
@@ -149,8 +157,6 @@ export class CustomerPageComponent implements OnInit {
   }
 
   openAddCustomerDialog(customer?:Customer){
-    console.log(customer);
-
     if (customer !=null){
       this.isCreate=false;
       this.customerUpdate=customer;
@@ -180,6 +186,57 @@ export class CustomerPageComponent implements OnInit {
     this.customerForm.reset();
     var addCustomerDialog:any = <any>document.getElementById('formDialog');
     addCustomerDialog.close();
+  }
+
+
+  openEmailCustomerDialog(customer:Customer){
+    this.customerEmail=customer;
+
+    if (customer.email !=null){
+      
+      var EmailCustomerDialog:any = <any>document.getElementById('formEmailDialog');  
+
+      if(typeof EmailCustomerDialog.showModal === "function"){
+        EmailCustomerDialog.showModal();
+      } else {
+        console.log("error navigateur !");
+      }      
+    } else {
+      window.alert("no email !");
+    }
+
+    
+
+  }
+
+  onSubmitEmailForm(){
+    const mail: Mail = new Mail();
+
+    const formValue = this.emailForm.value;
+    mail.customerId= this.customerEmail.id;
+    mail.emailSubject=formValue['emailSubject'];
+    mail.emailContent=formValue['emailContent'];
+
+
+    this.customerService.sendEmail(mail).subscribe(
+      (result:boolean)=>{
+        if(result){
+          console.log("Email sended");
+
+          this.emailForm.reset();
+          this.closeEmailDialog();
+        }
+      },
+      error => {
+        console.log(error);        
+      }
+    );
+  }
+
+  closeEmailDialog(){
+    this.emailForm.reset();
+    var EmailCustomerDialog:any = <any>document.getElementById('formEmailDialog');
+    EmailCustomerDialog.close();
   }
 }
 
